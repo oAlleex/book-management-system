@@ -1,4 +1,4 @@
-BMS-1 Setup HIBERNATE
+DONE --- BMS-1 Setup HIBERNATE
 BMS-2 Setup database utility class
 BMS-3 Create HIBERNATE model
 BMS-4 Create infrastructure for user menu
