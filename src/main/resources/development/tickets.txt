@@ -1,7 +1,7 @@
 DONE --- BMS-1 Setup HIBERNATE
 DONE --- BMS-2 Setup database utility class
 DONE --- BMS-3 Create HIBERNATE model
-BMS-4 Create infrastructure for user menu
+DONE --- BMS-4 Create infrastructure for user menu
 BMS-5 Create abstract and generic repository
 
 BMS-6 As a user I should be able to add a new author into the system;
