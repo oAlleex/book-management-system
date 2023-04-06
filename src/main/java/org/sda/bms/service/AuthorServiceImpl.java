@@ -3,7 +3,9 @@ package org.sda.bms.service;
 import org.sda.bms.model.Author;
 import org.sda.bms.repository.AuthorRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 public class AuthorServiceImpl implements AuthorService {
     private static final String NAME_VALIDATION_REGEX = "^[a-zA-Z]+$";
@@ -49,5 +51,19 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findAll();
     }
 
-
+    @Override
+    public void delete(int id) {
+        if (id <= 0){
+            throw new IllegalArgumentException(
+                    "Provided id is negative or zero. Please provide a valid id."
+            );
+        }
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        if(authorOptional.isEmpty()){
+            throw new EntityNotFoundException(
+                    "Author with provided id was not found in the system."
+            );
+        }
+        authorRepository.delete(authorOptional.get());
+    }
 }

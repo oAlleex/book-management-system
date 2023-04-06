@@ -2,9 +2,11 @@ package org.sda.bms.controller;
 
 import org.sda.bms.model.Author;
 import org.sda.bms.repository.exception.EntityCreationFailedException;
+import org.sda.bms.repository.exception.EntityDeleteFailedException;
 import org.sda.bms.repository.exception.EntityFetchingFailedException;
 import org.sda.bms.service.AuthorService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,6 +52,27 @@ public class AuthorController {
                 );
             }
         } catch (EntityFetchingFailedException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Internal server error. Please contact your administrator.");
+        }
+    }
+
+    public void deleteById() {
+        try {
+            System.out.println("Please provide the author id: ");
+            int authorId = Integer.parseInt(scanner.nextLine().trim());
+            authorService.delete(authorId);
+            System.out.println("The author was deleted.");
+        } catch (NumberFormatException e) {
+            System.err.println("Provided id is not a number. Please provide a valid id.");
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        } catch (EntityNotFoundException e) {
+            System.err.println(e.getMessage());
+        } catch (EntityFetchingFailedException e) {
+            System.err.println(e.getMessage());
+        } catch (EntityDeleteFailedException e) {
             System.err.println(e.getMessage());
         } catch (Exception e) {
             System.err.println("Internal server error. Please contact your administrator.");
