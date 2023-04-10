@@ -5,10 +5,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "review")
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id")
+    @Column(name = "id")
     private Integer id;
     @Column(name = "score")
     private Integer score;

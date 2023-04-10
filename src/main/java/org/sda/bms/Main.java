@@ -32,8 +32,8 @@ public class Main {
         UserOption userOption = UserOption.UNKNOWN;
         while (userOption != UserOption.EXIT) {
             UserOption.printAllOptions();
-            System.out.println(" ");
-            System.out.println("Please select an option:");
+            System.out.println();
+            System.out.println("Please Select An Option:");
             try {
                 int selectedOption = Integer.parseInt(scanner.nextLine().trim());
                 userOption = UserOption.findUserOption(selectedOption).orElse(UserOption.UNKNOWN);
@@ -46,7 +46,7 @@ public class Main {
                     authorController.create();
                     break;
                 case UPDATE_AUTHOR:
-                    authorController.update();
+                    authorController.updateById();
                     break;
                 case DELETE_AUTHOR:
                     authorController.deleteById();
@@ -56,9 +56,11 @@ public class Main {
                     break;
                 case CREATE_BOOK:
                     bookController.create();
+                case VIEW_ALL_BOOKS:
+                    bookController.displayAll();
                     break;
                 case UNKNOWN:
-                    System.out.println("Please insert a valid option!");
+                    System.out.println("Please insert a valid option!!!");
                     break;
                 case EXIT:
                     stopHibernate();
@@ -73,15 +75,15 @@ public class Main {
 
     private static void startHibernate() {
         SessionManager.getSessionFactory();
-        for (int i = 0; i <= 50; i++) {
-            System.out.println(" ");
+        for (int index = 0; index < 50; index++) {
+            System.out.println();
         }
     }
 
     private static void stopHibernate() {
         SessionManager.shutDown();
-        for (int i = 0; i <= 50; i++) {
-            System.out.println(" ");
+        for (int index = 0; index < 50; index++) {
+            System.out.println();
         }
     }
 }

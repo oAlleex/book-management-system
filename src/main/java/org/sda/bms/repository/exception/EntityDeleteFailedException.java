@@ -1,7 +1,7 @@
 package org.sda.bms.repository.exception;
 
-public class EntityDeleteFailedException extends RuntimeException{
-    public EntityDeleteFailedException(String message){
+public class EntityDeleteFailedException extends RuntimeException {
+    public EntityDeleteFailedException(String message) {
         super(message);
     }
 

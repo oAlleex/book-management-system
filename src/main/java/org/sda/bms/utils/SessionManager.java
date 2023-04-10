@@ -7,24 +7,23 @@ import org.sda.bms.model.Book;
 import org.sda.bms.model.Review;
 
 public class SessionManager extends AbstractSessionManager {
-
     private static final SessionManager INSTANCE = new SessionManager();
 
     private SessionManager() {
-        // hide default constructor
+        // hide the default constructor
     }
 
-    public static SessionFactory getSessionFactory(){
-        return INSTANCE.getSessionFactory("book_management_system");
+    public static SessionFactory getSessionFactory() {
+        return INSTANCE.getSessionFactory("book_management_system?serverTimezone=UTC");
     }
 
-    public static void shutDown(){
+    public static void shutDown() {
         INSTANCE.shutdownSessionManager();
     }
 
     @Override
     protected void setAnnotatedClasses(Configuration configuration) {
-        // do not forget to add a model here
+        // do not forget to add the model here
         configuration.addAnnotatedClass(Author.class);
         configuration.addAnnotatedClass(Book.class);
         configuration.addAnnotatedClass(Review.class);

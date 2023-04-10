@@ -6,7 +6,6 @@ import java.util.List;
 @Entity
 @Table(name = "book")
 public class Book {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -18,7 +17,6 @@ public class Book {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
-
     @OneToMany(mappedBy = "book")
     private List<Review> reviews;
 

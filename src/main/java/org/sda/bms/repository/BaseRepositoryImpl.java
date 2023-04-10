@@ -4,17 +4,15 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.sda.bms.repository.exception.EntityCreationFailedException;
-import org.sda.bms.repository.exception.EntityDeleteFailedException;
+import org.sda.bms.repository.exception.EntityDeletionFailedException;
 import org.sda.bms.repository.exception.EntityFetchingFailedException;
 import org.sda.bms.repository.exception.EntityUpdateFailedException;
 import org.sda.bms.utils.SessionManager;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 
 public class BaseRepositoryImpl<T> implements BaseRepository<T> {
-
     private final Class<T> entityClass;
 
     public BaseRepositoryImpl(Class<T> entityClass) {
@@ -35,8 +33,7 @@ public class BaseRepositoryImpl<T> implements BaseRepository<T> {
                 transaction.rollback();
             }
             throw new EntityCreationFailedException(
-                    "Entity creation failed!",
-                    e
+                    "Entity creation failed!", e
             );
         }
     }
@@ -55,8 +52,7 @@ public class BaseRepositoryImpl<T> implements BaseRepository<T> {
                 transaction.rollback();
             }
             throw new EntityUpdateFailedException(
-                    "Entity update failed!",
-                    e
+                    "Entity update failed!", e
             );
         }
     }
@@ -74,9 +70,8 @@ public class BaseRepositoryImpl<T> implements BaseRepository<T> {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new EntityDeleteFailedException(
-                    "Entity delete failed!",
-                    e
+            throw new EntityDeletionFailedException(
+                    "Entity deletion failed!", e
             );
         }
     }
@@ -87,8 +82,7 @@ public class BaseRepositoryImpl<T> implements BaseRepository<T> {
             return Optional.ofNullable(session.find(entityClass, id));
         } catch (Exception e) {
             throw new EntityFetchingFailedException(
-                    "Failed to load entity by id.",
-                    e
+                    "Failed to load entity by id", e
             );
         }
     }
@@ -96,16 +90,13 @@ public class BaseRepositoryImpl<T> implements BaseRepository<T> {
     @Override
     public List<T> findAll() {
         try (Session session = SessionManager.getSessionFactory().openSession()) {
-
             Query<T> query = session.createQuery(
-                    "from " + entityClass.getSimpleName(),
-                    entityClass
+                    "from " + entityClass.getSimpleName(), entityClass
             );
             return query.list();
         } catch (Exception e) {
             throw new EntityFetchingFailedException(
-                    "Failed to load all entities",
-                    e
+                    "Failed to load all entities", e
             );
         }
     }

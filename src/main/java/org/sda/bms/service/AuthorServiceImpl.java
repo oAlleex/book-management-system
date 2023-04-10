@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class AuthorServiceImpl implements AuthorService {
     private static final String NAME_VALIDATION_REGEX = "^[a-zA-Z]+$";
-    //dependencies
+    // dependencies
     private final AuthorRepository authorRepository;
 
     public AuthorServiceImpl(AuthorRepository authorRepository) {
@@ -18,31 +18,31 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void create(String firstName, String lastName) {
-        if (firstName == null || firstName.isBlank() || firstName.isEmpty()){
+        if (firstName == null || firstName.isBlank() || firstName.isEmpty()) {
             throw new IllegalArgumentException(
                     "Provided first name is empty or blank. Provide a valid value."
             );
         }
 
-        if (lastName == null || lastName.isBlank() || lastName.isEmpty()){
+        if (lastName == null || lastName.isBlank() || lastName.isEmpty()) {
             throw new IllegalArgumentException(
                     "Provided last name is empty or blank. Provide a valid value."
             );
         }
 
-        if (!firstName.matches(NAME_VALIDATION_REGEX)){
+        if (!firstName.matches(NAME_VALIDATION_REGEX)) {
             throw new IllegalArgumentException(
                     "Provided first name contains invalid characters. Provide a valid value."
             );
         }
 
-        if (!lastName.matches(NAME_VALIDATION_REGEX)){
+        if (!lastName.matches(NAME_VALIDATION_REGEX)) {
             throw new IllegalArgumentException(
                     "Provided last name contains invalid characters. Provide a valid value."
             );
         }
 
-        Author author = new Author(firstName,lastName);
+        Author author = new Author(firstName, lastName);
         authorRepository.create(author);
     }
 
@@ -53,60 +53,62 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void delete(int id) {
-        if (id <= 0){
+        if (id <= 0) {
             throw new IllegalArgumentException(
-                    "Provided id is negative or zero. Please provide a valid id."
+                    "Provided id is negative or 0. Provide a valid value."
             );
         }
+
         Optional<Author> authorOptional = authorRepository.findById(id);
-        if(authorOptional.isEmpty()){
+        if (authorOptional.isEmpty()) {
             throw new EntityNotFoundException(
                     "Author with provided id was not found in the system."
             );
         }
+
         authorRepository.delete(authorOptional.get());
     }
 
     @Override
     public void update(int id, String firstName, String lastName) {
-        if (id <= 0){
+        if (id <= 0) {
             throw new IllegalArgumentException(
-                    "Provided id is negative or zero. Please provide a valid id."
+                    "Provided id is negative or 0. Provide a valid value."
             );
         }
 
-        if (firstName == null || firstName.isBlank() || firstName.isEmpty()){
+        if (firstName == null || firstName.isBlank() || firstName.isEmpty()) {
             throw new IllegalArgumentException(
                     "Provided first name is empty or blank. Provide a valid value."
             );
         }
 
-        if (lastName == null || lastName.isBlank() || lastName.isEmpty()){
+        if (lastName == null || lastName.isBlank() || lastName.isEmpty()) {
             throw new IllegalArgumentException(
                     "Provided last name is empty or blank. Provide a valid value."
             );
         }
 
-        if (!firstName.matches(NAME_VALIDATION_REGEX)){
+        if (!firstName.matches(NAME_VALIDATION_REGEX)) {
             throw new IllegalArgumentException(
                     "Provided first name contains invalid characters. Provide a valid value."
             );
         }
 
-        if (!lastName.matches(NAME_VALIDATION_REGEX)){
+        if (!lastName.matches(NAME_VALIDATION_REGEX)) {
             throw new IllegalArgumentException(
                     "Provided last name contains invalid characters. Provide a valid value."
             );
         }
 
-        Optional<Author> optionalAuthor = authorRepository.findById(id);
-        if(optionalAuthor.isEmpty()){
+        Optional<Author> authorOptional = authorRepository.findById(id);
+        if (authorOptional.isEmpty()) {
             throw new EntityNotFoundException(
                     "Author with provided id was not found in the system."
             );
         }
 
-        Author author = optionalAuthor.get();
+        Author author = authorOptional.get();
         author.setFirstName(firstName);
         author.setLastName(lastName);
         authorRepository.update(author);
