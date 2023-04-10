@@ -57,4 +57,14 @@ public class BookServiceImpl implements BookService {
     public List<Book> findAll() {
         return bookRepository.findAll();
     }
+
+    @Override
+    public Optional<Book> findById(int id) {
+        if(id <= 0){
+            throw new IllegalArgumentException(
+                    "Provided id is negative or 0. Provide a valid value."
+            );
+        }
+        return bookRepository.findById(id);
+    }
 }
