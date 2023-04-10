@@ -2,6 +2,7 @@ package org.sda.bms.controller;
 
 import org.sda.bms.model.Book;
 import org.sda.bms.repository.exception.EntityCreationFailedException;
+import org.sda.bms.repository.exception.EntityDeleteFailedException;
 import org.sda.bms.repository.exception.EntityFetchingFailedException;
 import org.sda.bms.service.AuthorService;
 import org.sda.bms.service.BookService;
@@ -96,18 +97,40 @@ public class BookController {
         }
     }
 
-    private static String formatBookDescription(String description){
+    private static String formatBookDescription(String description) {
         String result = "";
 
         final int maxNumberOfWords = 5;
-        String [] words = description.split(" ");
+        String[] words = description.split(" ");
 
-        for (int index = 0; index < words.length; index++){
-            if(index % maxNumberOfWords == 0){
+        for (int index = 0; index < words.length; index++) {
+            if (index % maxNumberOfWords == 0) {
                 result = result + "\n\t";
             }
             result = result + "\s" + words[index];
         }
         return result;
+    }
+
+    public void deleteById() {
+        try {
+            System.out.println("Please provide book id: ");
+            int bookId = Integer.parseInt(scanner.nextLine().trim());
+
+            bookService.deleteById(bookId);
+            System.out.println("Book was deleted!");
+        } catch (NumberFormatException e) {
+            System.err.println("Provided id is not a number. Provide a valid value.");
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        } catch (EntityFetchingFailedException e) {
+            System.err.println(e.getMessage());
+        } catch (EntityDeleteFailedException e) {
+            System.err.println(e.getMessage());
+        } catch (EntityNotFoundException e) {
+            System.err.println(e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Internal server error. Please contact your administrator.");
+        }
     }
 }

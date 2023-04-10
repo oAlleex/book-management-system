@@ -12,4 +12,8 @@ public interface BookService {
     List<Book> findAll();
 
     Optional<Book> findById(int id);
+
+    void deleteById(int id);
+
+    void updateById(int id);
 }
